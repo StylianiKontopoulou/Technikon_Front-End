@@ -1,31 +1,33 @@
 <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
-    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
-    <br>
-    <input type="text" formControlName="email" placeholder="e-mail" />
+  <div class="container">
+    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 header">Login</p>
+    
+    <label>E-mail</label>
+    <input class="text-center" type="text" formControlName="email" placeholder="e-mail" />
     @if(email?.hasError('required') && email?.touched){
-    <div>Email Required</div>
+    <div class="text-danger">Email Required</div>
     } @if(email?.hasError('email') && email?.touched){
-    <div>Email must have a specific format...&#64; &copy;</div>
+    <div class="text-danger">Email must have a specific format...&#64; &copy;</div>
     }
-    <br /><br />
+    <br />
   
+    <label>Password</label>
     <input
+      class="text-center"
       type="text"
       formControlName="password"
-      placeholder="enter a password"
+      placeholder="Please enter your password"
     />
     @if(password?.hasError('required') && password?.touched){
-    <div>Password Required</div>
+    <div class="text-danger">Password Required</div>
     } @if(password?.hasError('minlength') && password?.touched){
-    <div>Password must have at least 4 letters</div>
+    <div class="text-danger">Password must have at least 4 letters</div>
     } @if(password?.hasError('pattern') &&password?.touched){
-    <div>Password must have only letters</div>
+    <div class="text-danger">Password must have only letters</div>
     }
     <br /><br />
-    <button [disabled="loginForm.invalid" ]>Login</button>
-    <select>
-      <option>Hello</option>
-      <option>World</option>
-    </select>
+    <button class="text-center submit-button" [disabled]="!loginForm.valid">Login</button>
+    
+  </div>
   </form>
   
