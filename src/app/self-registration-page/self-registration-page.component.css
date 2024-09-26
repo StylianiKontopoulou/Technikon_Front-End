@@ -39,9 +39,9 @@ input {
     font-size: 16px;
     font-weight: 300;
     text-transform: uppercase;
-    display:block;
-    /* display:inline-block; */
+    display:block;    
     margin-bottom: 1rem;
+    border-radius: 8px;
 }
 ::placeholder pseudo-element{
     width:max-content;
@@ -54,6 +54,7 @@ input {
 
 select {
     margin-bottom: 4rem;
+    border-radius: 8px;
 }
 .submit-button {
     position: absolute;
