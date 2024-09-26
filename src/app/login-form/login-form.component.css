@@ -56,7 +56,6 @@ input {
 .submit-button {
     position: absolute;
     bottom: 10px;
-    right: 10px;
     padding: 10px 20px;
     background-color: #004a7c;
     color: white;
@@ -64,8 +63,16 @@ input {
     border-radius: 5px;
     cursor: pointer;
   }
+  #login{
+    right: 10px;
+  }
   
   .submit-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+
+  #signup{
+    left: 10px;
+    
   }

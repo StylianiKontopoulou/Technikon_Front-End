@@ -53,12 +53,12 @@ input {
 }
 
 select {
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
 }
 .submit-button {
     position: absolute;
     bottom: 10px;
-    right: 10px;
+    
     padding: 10px 20px;
     background-color: #004a7c;
     color: white;
@@ -70,4 +70,11 @@ select {
   .submit-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+
+  #signup{
+    right: 10px;
+  }
+  #login {
+    left:30px;
   }
