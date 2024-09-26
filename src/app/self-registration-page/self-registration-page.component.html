@@ -1,0 +1,120 @@
+<form [formGroup]="registrationForm" (ngSubmit)="signupUser()">
+  <div class="container">
+    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 header">Sign up</p>
+
+    <label>VAT</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="VAT"
+      placeholder="VAT"
+    />
+    @if(VAT?.hasError('required') && VAT?.touched){
+    <div>VAT is required</div>
+    }
+    @if(VAT?.hasError('pattern') && VAT?.touched){
+        <div>VAT must be exactly 9 digits and contain only numbers</div>
+      
+    }
+   
+
+    <label class="">First Name</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="name"
+      placeholder="Please enter your First Name"
+    />
+    @if(name?.hasError('required') && name?.touched){
+    <div>Name is required</div>
+    }
+    
+
+    <label >Last Name</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="lastname"
+      placeholder="Please enter your Last Name"
+    />
+    @if(lastname?.hasError('required') && lastname?.touched){
+    <div>Lastname is required</div>
+    }
+    
+
+    <label>Address</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="address"
+      placeholder="Please enter your address"
+    />
+    @if(address?.hasError('required') && address?.touched){
+    <div>Address is required</div>
+    }
+    
+
+    <label>Phone Number</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="phone"
+      placeholder="Please enter your phone number"
+    />
+    @if(phone?.hasError('required') && phone?.touched){
+    <div>Phone number is required</div>
+    }
+    
+
+    <label>E-mail</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="email"
+      placeholder="e-mail"
+    />
+    @if(email?.hasError('required') && email?.touched){
+    <div>Email is required</div>
+    } @if(email?.hasError('email') && email?.touched){
+    <div>Email must have a specific format...&#64; &copy;</div>
+    }
+    
+
+    <label>Password</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="password"
+      placeholder="Please enter a password"
+    />
+    @if(password?.hasError('required') && password?.touched){
+    <div>Password Required</div>
+    } @if(password?.hasError('minlength') && password?.touched){
+    <div>Password must have at least 4 letters</div>
+    } @if(password?.hasError('pattern') &&password?.touched){
+    <div>Password must have only letters</div>
+    }
+    
+
+    <label>Password</label>
+    <input
+      class="text-center"
+      type="password"
+      formControlName="confirmPassword"
+      placeholder="Please re-enter your password"
+    />
+    @if(registrationForm.hasError('passwordMismatch') &&
+    confirmPassword?.touched){
+    <div>Passwords do not match</div>
+    }
+    <select formControlName="role">
+        <option value="PropertyOwner">Property Owner</option>
+        <option value="Admin">Admin</option>
+    </select>
+
+    <button class="text-center submit-button" [disabled="registrationForm.invalid" ]>
+      Signup
+    </button>
+    
+  </div>
+</form>

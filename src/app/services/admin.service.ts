@@ -5,5 +5,18 @@ import { Injectable } from '@angular/core';
 })
 export class AdminService {
 
-  constructor() { }
+  // constructor() { }
+  // post(data: any){
+
+  //   const headers = new HttpHeaders()
+  //   .set('Content-Type', 'application/json')
+  //   .set('crossDomain', 'true') 
+
+  //   const url = 'https://reqres.in/api/users/1';
+  //   return this.http.post(url,JSON.stringify(data), {headers:headers}); //{headers}
+  //   .pipe(
+  //     retry(1),
+  //     catchError(error => throwError(() => 'Something is wrong...') 
+  //   );
+  // }
 }
