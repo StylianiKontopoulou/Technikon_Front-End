@@ -5,9 +5,9 @@
     <label>E-mail</label>
     <input class="text-center" type="text" formControlName="email" placeholder="e-mail" />
     @if(email?.hasError('required') && email?.touched){
-    <div class="text-danger">Email Required</div>
+    <div class="text-danger bg-transparent">Email Required</div>
     } @if(email?.hasError('email') && email?.touched){
-    <div class="text-danger">Email must have a specific format...&#64; &copy;</div>
+    <div class="text-danger bg-transparent">Email must have a specific format...&#64; &copy;</div>
     }
    
   
@@ -19,11 +19,11 @@
       placeholder="Please enter your password"
     />
     @if(password?.hasError('required') && password?.touched){
-    <div class="text-danger">Password Required</div>
+    <div class="text-danger bg-transparent">Password Required</div>
     } @if(password?.hasError('minlength') && password?.touched){
-    <div class="text-danger">Password must have at least 4 letters</div>
+    <div class="text-danger bg-transparent">Password must have at least 4 letters</div>
     } @if(password?.hasError('pattern') &&password?.touched){
-    <div class="text-danger">Password must have only letters</div>
+    <div class="text-danger bg-transparent">Password must have only letters</div>
     }
     <br/><br/><br/>
     <button class="text-center submit-button" id="signup">Don't have an account yet? Sign Up</button>

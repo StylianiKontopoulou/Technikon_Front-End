@@ -10,10 +10,10 @@
       placeholder="VAT"
     />
     @if(VAT?.hasError('required') && VAT?.touched){
-    <div class="text-danger">VAT is required</div>
+    <div class="text-danger bg-transparent">VAT is required</div>
     }
     @if(VAT?.hasError('pattern') && VAT?.touched){
-        <div class="text-danger">VAT must be exactly 9 digits and contain only numbers</div>
+        <div class="text-danger bg-transparent">VAT must be exactly 9 digits and contain only numbers</div>
       
     }
    
@@ -26,7 +26,7 @@
       placeholder="Please enter your First Name"
     />
     @if(name?.hasError('required') && name?.touched){
-    <div class="text-danger">Name is required</div>
+    <div class="text-danger bg-transparent">Name is required</div>
     }
     
 
@@ -38,7 +38,7 @@
       placeholder="Please enter your Last Name"
     />
     @if(lastname?.hasError('required') && lastname?.touched){
-    <div class="text-danger">Lastname is required</div>
+    <div class="text-danger bg-transparent">Lastname is required</div>
     }
     
 
@@ -50,7 +50,7 @@
       placeholder="Please enter your address"
     />
     @if(address?.hasError('required') && address?.touched){
-    <div class="text-danger">Address is required</div>
+    <div class="text-danger bg-transparent">Address is required</div>
     }
     
 
@@ -62,10 +62,10 @@
       placeholder="Please enter your phone number"
     />
     @if(phone?.hasError('required') && phone?.touched){
-    <div class="text-danger">Phone number is required</div>
+    <div class="text-danger bg-transparent">Phone number is required</div>
     }
     @if(phone?.hasError('pattern') && phone?.touched){
-    <div class="text-danger">Phone number must contain 10 digits </div>
+    <div class="text-danger bg-transparent">Phone number must contain 10 digits </div>
     }
     
 
@@ -77,9 +77,9 @@
       placeholder="e-mail"
     />
     @if(email?.hasError('required') && email?.touched){
-    <div class="text-danger">Email is required</div>
+    <div class="text-danger bg-transparent">Email is required</div>
     } @if(email?.hasError('email') && email?.touched){
-    <div class="text-danger">Email must have a specific format...&#64; &copy;</div>
+    <div class="text-danger bg-transparent">Email must have a specific format...&#64; &copy;</div>
     }
     
 
@@ -91,11 +91,11 @@
       placeholder="Please enter a password"
     />
     @if(password?.hasError('required') && password?.touched){
-    <div class="text-danger">Password Required</div>
+    <div class="text-danger bg-transparent">Password Required</div>
     } @if(password?.hasError('minlength') && password?.touched){
-    <div class="text-danger">Password must have at least 4 letters</div>
+    <div class="text-danger bg-transparent">Password must have at least 4 letters</div>
     } @if(password?.hasError('pattern') &&password?.touched){
-    <div class="text-danger">Password must have only letters</div>
+    <div class="text-danger bg-transparent">Password must have only letters</div>
     }
     
 
@@ -108,7 +108,7 @@
     />
     @if(registrationForm.hasError('passwordMismatch') &&
     confirmPassword?.touched){
-    <div class="text-danger">Passwords do not match</div>
+    <div class="text-danger bg-transparent">Passwords do not match</div>
     }
     <select formControlName="role">
         <option value="PropertyOwner">Property Owner</option>

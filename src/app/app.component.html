@@ -1,5 +1,11 @@
-<app-self-registration-page></app-self-registration-page>
-<app-login-form></app-login-form>
+<nav class="navbar navbar-dark bg-primary navbar-collapse">
+    <ul>
+        <li><a [routerLink]="['home']" routerLinkActive="active">Home</a></li>
+        <li><a [routerLink]="['login']" routerLinkActive="active">Login</a></li>
+        <li><a [routerLink]="['signup']" routerLinkActive="active">Signup</a></li>
+        <li><a [routerLink]="['admin', '1']" [queryParams]="{search:'id'}" routerLinkActive="active">Admin</a></li>
+        <li><a [routerLink]="['user', '1']" [queryParams]="{search:'id'}"  routerLinkActive="active">User</a></li>
+    </ul>
+</nav>
 
-<!-- <app-admin></app-admin>
-<app-user></app-user> -->
+<router-outlet></router-outlet>

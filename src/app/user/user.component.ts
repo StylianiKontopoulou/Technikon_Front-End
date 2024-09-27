@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -8,5 +9,15 @@ import { Component } from '@angular/core';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
+  //  @Input() id!: string;
+  //  @Input() search!: string;
 
+  //  router = inject(Router);
+  //  goHome(){
+  //   this.router.navigate(['home'])
+  //  }
+
+  //  goAdmin() {
+  //   this.router.navigateByUrl('/admin')
+  //  }
 }
