@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CustomValidatorsService } from '../services/custom-validators.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-self-registration-page',
@@ -82,5 +83,11 @@ export class SelfRegistrationPageComponent implements OnInit {
     //something like that
     //if (this.loginForm.valid)
     // this.service.post(this.loginForm.value)
+
+    
+  }
+  router = inject(Router);
+  goLogin(){
+    this.router.navigate(['login'])
   }
 }

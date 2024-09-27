@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -37,5 +38,9 @@ export class LoginFormComponent implements OnInit{
     //something like that
     //if (this.loginForm.valid)
     // this.service.post(this.loginForm.value)
+  }
+  router = inject(Router);
+  goSignUp(){
+    this.router.navigate(['home'])
   }
 }
