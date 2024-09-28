@@ -4,9 +4,11 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { FileNotFoundComponent } from './file-not-found/file-not-found.component';
 import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
-    {path: 'home', component:SelfRegistrationPageComponent},
+    {path: 'home', component:HomeComponent},
+    {path: 'signup', component: SelfRegistrationPageComponent},
     {path: 'login', component:LoginFormComponent},
     {path: 'admin/:id', component:AdminComponent},
     {path: 'user/:id', component:UserComponent},
