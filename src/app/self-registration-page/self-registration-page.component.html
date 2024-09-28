@@ -79,7 +79,7 @@
     @if(email?.hasError('required') && email?.touched){
     <div class="text-danger bg-transparent">Email is required</div>
     } @if(email?.hasError('email') && email?.touched){
-    <div class="text-danger bg-transparent">Email must have a specific format...&#64; &copy;</div>
+    <div class="text-danger bg-transparent">Email must have a specific format...&#64;</div>
     }
     
 
@@ -116,9 +116,21 @@
     </select>
 
     <button class="text-center submit-button" id="login" (click)="goLogin()">Already Registered? Login</button>
-    <button class="text-center submit-button" id="signup"[disabled]="!registrationForm.valid" >
+    <button class="text-center submit-button" id="signup"[disabled]="!registrationForm.valid" (click)="postAddUser()" >
       Signup
     </button>
     
   </div>
 </form>
+<!-- <h4>Users</h4> -->
+
+<!-- <pre>{{{users | async | json}}} </pre>-->
+
+<!-- <pre>{{users | json}}</pre>> -->
+
+<!-- <p>First Name {{ users.data.first_name}}</p>
+<p>Last Name {{ users.data.last_name}}</p>
+<p>Url {{ users.support.url}}</p> -->
+
+<!-- <button (click)="postAddUser()">Create New User</button> -->
+

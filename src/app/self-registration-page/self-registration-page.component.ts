@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { CustomValidatorsService } from '../services/custom-validators.service';
 import { Router } from '@angular/router';
+import { AdminService } from '../services/admin.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-self-registration-page',
@@ -18,6 +20,11 @@ import { Router } from '@angular/router';
 export class SelfRegistrationPageComponent implements OnInit {
   registrationForm!: FormGroup;
   fb = inject(FormBuilder);
+
+  service = inject(AdminService);
+  service2 = inject(UserService);
+  users: any;
+  answer: any;
   
 
   ngOnInit(): void {
@@ -89,5 +96,25 @@ export class SelfRegistrationPageComponent implements OnInit {
   router = inject(Router);
   goLogin(){
     this.router.navigate(['login'])
+  }
+
+  postAddUser() {
+    const registeredUser = {
+      vat: '',
+      firstName: '',
+      lastName: '',
+      address: '',
+      phoneNumber: '',
+      email: '',
+      userName: '',
+      password: '',
+      userType: '',
+    };
+    //this.service2.setRegisteredUser(registeredUser);
+
+    this.service.postAddUser(registeredUser).subscribe({
+      next: (response) => (this.answer = response),
+      error: (err) => console.error(registeredUser),
+    });
   }
 }
