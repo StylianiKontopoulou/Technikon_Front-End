@@ -1,0 +1,15 @@
+.container {
+    padding: 50px 15px;
+  }
+  
+  h1 {
+    font-size: 3.5rem;
+  }
+  
+  p {
+    font-size: 1.25rem;
+  }
+  
+  .btn {
+    font-size: 1.2rem;
+  }

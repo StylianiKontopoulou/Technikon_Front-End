@@ -5,6 +5,7 @@ import { FileNotFoundComponent } from './file-not-found/file-not-found.component
 import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 export const routes: Routes = [
     {path: 'home', component:HomeComponent},
@@ -12,7 +13,7 @@ export const routes: Routes = [
     {path: 'login', component:LoginFormComponent},
     {path: 'admin/:id', component:AdminComponent},
     {path: 'user/:id', component:UserComponent},
-    // {path: '', component:SelfRegistrationPageComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
+    { path: 'unauthorized', component: UnauthorizedComponent }, 
     {path: '**', component:FileNotFoundComponent}
 ];

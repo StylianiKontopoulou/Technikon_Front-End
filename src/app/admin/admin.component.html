@@ -1,1 +1,12 @@
-<p>admin works!</p>
+<h4>Users</h4>
+
+<!-- <pre>{{{users | async | json}}} </pre>-->
+<p>All the registered users are:</p>
+<pre>{{users | json}}</pre>>
+
+<p>First Name {{ users.data.first_name}}</p>
+<p>Last Name {{ users.data.last_name}}</p>
+<p>Url {{ users.support.url}}</p>
+
+<button (click)="postAddUser()">Create New User</button>
+<button (click)="postAddProperty()">Create New Property</button>

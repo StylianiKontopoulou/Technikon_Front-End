@@ -2,12 +2,12 @@
   <div class="container">
     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 header">Login</p>
     
-    <label>E-mail</label>
-    <input class="text-center" type="text" formControlName="email" placeholder="e-mail" />
-    @if(email?.hasError('required') && email?.touched){
-    <div class="text-danger bg-transparent">Email Required</div>
-    } @if(email?.hasError('email') && email?.touched){
-    <div class="text-danger bg-transparent">Email must have a specific format...&#64; &copy;</div>
+    <label>Username</label>
+    <input class="text-center" type="text" formControlName="userName" placeholder="Username" />
+    @if(userName?.hasError('required') && userName?.touched){
+    <div class="text-danger bg-transparent">Username Required</div>
+    } @if(userName?.hasError('userName') && userName?.touched){
+    <div class="text-danger bg-transparent">Username must have a specific format...&#64; &copy;</div>
     }
    
   
