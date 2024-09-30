@@ -86,7 +86,7 @@
     <label>Password</label>
     <input
       class="text-center"
-      type="text"
+      type="password"
       formControlName="password"
       placeholder="Please enter a password"
     />
@@ -114,12 +114,12 @@
         <option value="PropertyOwner">Property Owner</option>
         <option value="Admin">Admin</option>
     </select>
-
-    <button class="text-center submit-button" id="login" (click)="goLogin()">Already Registered? Login</button>
-    <button class="text-center submit-button" id="signup"[disabled]="!registrationForm.valid" (click)="postAddUser()" >
-      Signup
-    </button>
-    
+    <div class="footer d-flex justify-content-between py-3">
+      <button class="text-center submit-button" id="login" (click)="goLogin()">Already Registered? Login</button>
+      <button class="text-center submit-button" id="signup"[disabled]="!registrationForm.valid" (click)="postAddUser()" >
+        Signup
+      </button>
+    </div>
   </div>
 </form>
 <!-- <h4>Users</h4> -->

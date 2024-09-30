@@ -49,7 +49,7 @@ export class SelfRegistrationPageComponent implements OnInit {
       {
         validators: CustomValidatorsService.passwordMatchValidator,
       }
-    ); //ειναι αρχικη τιμη στη φορμα ο,τι γραψω μεσα
+    ); 
   }
 
   get VAT() {
