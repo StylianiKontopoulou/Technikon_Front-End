@@ -1,8 +1,7 @@
-*{
-    background-color: 	#e8f1f5;
-    
-    
+* {
+    background-color: 	#fafafa;
 }
+
 body {
     color:#005691;
     display:inline-block;
@@ -10,18 +9,16 @@ body {
 .container{
     position: relative;
     width:max-content;
-    /* text-align: center; */
     text-justify: auto;
     border: 2px solid black;
     border-radius: 15px;
     padding-top: 1rem;
-    /* padding-left: 2rem; */
     margin-top: 2rem;
     background-color: #e8f1f5;
     text-emphasis-color: black;
     box-shadow:  0 0 2px 2px #d9d9d9;
-    
 }
+
 label {
     color: #004a7c;
     background-color: #e8f1f5;
@@ -34,14 +31,16 @@ label {
 }
 input {
     width: 350px;
-    
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     font-weight: 300;
-    text-transform: uppercase;
     display:block;    
     margin-bottom: 1rem;
     border-radius: 8px;
+}
+
+input::placeholder{
+    text-transform: uppercase;
 }
 ::placeholder pseudo-element{
     width:max-content;
@@ -53,11 +52,11 @@ input {
 }
 
 select {
-    margin-bottom: 4rem;
+    margin-bottom: 5px;
     border-radius: 8px;
 }
+
 .submit-button {
-    position: absolute;
     bottom: 10px;
     
     padding: 10px 20px;
@@ -73,9 +72,6 @@ select {
     cursor: not-allowed;
   }
 
-  #signup{
-    right: 10px;
-  }
-  #login {
-    left:12px;
+  .footer {
+    background-color: inherit;
   }

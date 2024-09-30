@@ -11,7 +11,7 @@ export const routes: Routes = [
     {path: 'home', component:HomeComponent},
     {path: 'signup', component: SelfRegistrationPageComponent},
     {path: 'login', component:LoginFormComponent},
-    {path: 'admin/:id', component:AdminComponent},
+    {path: 'admin', component:AdminComponent},
     {path: 'user/:id', component:UserComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'unauthorized', component: UnauthorizedComponent }, 
