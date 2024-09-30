@@ -1,12 +1,249 @@
-<h4>Users</h4>
+<div class="text-center">
+  <h4>Users</h4>
 
-<!-- <pre>{{{users | async | json}}} </pre>-->
-<p>All the registered users are:</p>
-<pre>{{users | json}}</pre>>
+  <div class="container my-5">
+    <div class="row">
+      <div
+        *ngFor="let user of users"
+        class="col-xs-12 col-sm-6 col-lg-3 mb-sm-2"
+      >
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">User Information</h5>
+            <p class="card-text">
+              <strong>First Name:</strong> {{ user.firstName }}
+            </p>
+            <p class="card-text">
+              <strong>Last Name:</strong> {{ user.lastName }}
+            </p>
+            <p class="card-text">
+              <strong>Address:</strong> {{ user.address }}
+            </p>
+            <p class="card-text"><strong>VAT:</strong> {{ user.vat }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p>First Name {{ users.data.first_name}}</p>
-<p>Last Name {{ users.data.last_name}}</p>
-<p>Url {{ users.support.url}}</p>
+  <h4>Properties</h4>
+  <div class="container my-5">
+    <div class="row">
+      <div
+        *ngFor="let property of properties"
+        class="col-xs-12 col-md-6 col-lg-4 mb-sm-2"
+      >
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Property Information</h5>
+            <p class="card-text">
+              <strong>Owner:</strong> {{ property.user.firstName }} {{ property.user.lastName }}
+            </p>
+            <p class="card-text">
+              <strong>Address:</strong> {{ property.address }}
+            </p>
+            <p class="card-text">
+              <strong>Property ID:</strong> {{ property.propertyId }}
+            </p>
+            <p class="card-text">
+              <strong>Year of Construction:</strong
+              >{{ property.yearOfConstruction }}
+            </p>
+            <p><strong>Property Type:</strong> {{ property.propertyType }}</p>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<button (click)="postAddUser()">Create New User</button>
-<button (click)="postAddProperty()">Create New Property</button>
+<div class="container">
+  <h4 class="my-3">Create New Property</h4>
+  <form
+    [formGroup]="propertyForm"
+    (ngSubmit)="postAddProperty()"
+    class="row g-3"
+  >
+    <div class="col-md-6">
+      <label for="property-address" class="form-label">Address</label>
+      <input
+        id="property-address"
+        formControlName="address"
+        class="form-control"
+        [(ngModel)]="newProperty.address"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="property-id" class="form-label">Property ID</label>
+      <input
+        id="property-id"
+        type="text"
+        formControlName="propertyId"
+        class="form-control"
+        [(ngModel)]="newProperty.propertyId"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="user-id" class="form-label">User (Owner)</label>
+      <select
+        id="user-id"
+        formControlName="userId"
+        class="form-select"
+        [(ngModel)]="newProperty.user.id"
+        required
+      >
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.firstName }} {{ user.lastName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label for="yearOfConstruction" class="form-label"
+        >Year of Construction</label
+      >
+      <input
+        id="yearOfConstruction"
+        type="number"
+        formControlName="yearOfConstruction"
+        class="form-control"
+        [(ngModel)]="newProperty.yearOfConstruction"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="propertyType" class="form-label">Property Type</label>
+      <select
+        id="propertyType"
+        formControlName="propertyType"
+        class="form-select"
+        [(ngModel)]="newProperty.propertyType"
+        required
+      >
+        <option value="DETACHED_HOUSE">Detached house</option>
+        <option value="MAISONETTE">Maisonette</option>
+        <option value="APARTMENT_BUILDING">Apartment building</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Create Property</button>
+    </div>
+  </form>
+
+  <h4 class="my-3">Create New User</h4>
+  <form [formGroup]="userForm" (ngSubmit)="postAddUser()" class="row g-3">
+    <div class="col-md-6">
+      <label for="vat" class="form-label">VAT</label>
+      <input
+        id="vat"
+        formControlName="vat"
+        class="form-control"
+        [(ngModel)]="newUser.vat"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="firstName" class="form-label">First Name</label>
+      <input
+        id="firstName"
+        formControlName="firstName"
+        class="form-control"
+        [(ngModel)]="newUser.firstName"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input
+        id="lastName"
+        formControlName="lastName"
+        class="form-control"
+        [(ngModel)]="newUser.lastName"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="address" class="form-label">Address</label>
+      <input
+        id="address"
+        formControlName="address"
+        class="form-control"
+        [(ngModel)]="newUser.address"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="phoneNumber" class="form-label">Phone Number</label>
+      <input
+        id="phoneNumber"
+        formControlName="phoneNumber"
+        class="form-control"
+        [(ngModel)]="newUser.phoneNumber"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="form-control"
+        [(ngModel)]="newUser.email"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="userName" class="form-label">Username</label>
+      <input
+        id="userName"
+        formControlName="userName"
+        class="form-control"
+        [(ngModel)]="newUser.userName"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="password" class="form-label">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="form-control"
+        [(ngModel)]="newUser.password"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="userType" class="form-label">User Type</label>
+      <select
+        id="userType"
+        formControlName="userType"
+        class="form-select"
+        [(ngModel)]="newUser.userType"
+      >
+        <option value="PROPERTY_OWNER">Property owner</option>
+        <option value="ADMIN">Administrator</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Create User</button>
+    </div>
+  </form>
+</div>
