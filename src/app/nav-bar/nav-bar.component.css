@@ -2,14 +2,14 @@
 .navbar-scroll .nav-link,
 .navbar-scroll .navbar-toggler-icon,
 .navbar-scroll .navbar-brand {
-  color: #fff;
+  color: black;
 }
 
 /* Color of the links AFTER scroll */
 .navbar-scrolled .nav-link,
 .navbar-scrolled .navbar-toggler-icon,
 .navbar-scrolled .navbar-brand {
-  color: #fff;
+  color: black;
 }
 
 /* Color of the navbar AFTER scroll */
@@ -24,6 +24,6 @@
 }
 
 .navbar-brand {
-  font-size: 1.75rem;
+  font-size: 3rem;
   letter-spacing: 3px;
 }
