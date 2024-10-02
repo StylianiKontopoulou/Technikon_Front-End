@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit {
   userForm!: FormGroup;
   propertyForm!: FormGroup;
   fb = inject(FormBuilder);
-  private baseUrl = 'http://localhost:8080/webTechnikon/resources/admin';
+  // private baseUrl = 'http://localhost:8080/webTechnikon/resources/admin';
 
   // Αρχικοποίηση του νέου property με τα κατάλληλα πεδία
   newProperty = {
@@ -74,7 +74,7 @@ export class AdminComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(4),
-            Validators.pattern('^[a-zA-Z]+$'),
+            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$'),
           ],
         ],
         confirmPassword: ['', Validators.required],
