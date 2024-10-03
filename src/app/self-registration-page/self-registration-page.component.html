@@ -1,4 +1,4 @@
-<form [formGroup]="registrationForm" (ngSubmit)="signupUser()">
+<form [formGroup]="registrationForm" (ngSubmit)="postAddUser()">
   <div class="container">
     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 header">Sign up</p>
 
@@ -6,27 +6,39 @@
     <input
       class="text-center"
       type="text"
-      formControlName="VAT"
+      formControlName="vat"
       placeholder="VAT"
     />
-    @if(VAT?.hasError('required') && VAT?.touched){
+    @if(vat?.hasError('required') && vat?.touched){
     <div class="text-danger bg-transparent">VAT is required</div>
     }
-    @if(VAT?.hasError('pattern') && VAT?.touched){
+    @if(vat?.hasError('pattern') && vat?.touched){
         <div class="text-danger bg-transparent">VAT must be exactly 9 digits and contain only numbers</div>
       
     }
    
 
+
+    <label class="">Username</label>
+    <input
+      class="text-center"
+      type="text"
+      formControlName="userName"
+      placeholder="Please enter your Username"
+    />
+    @if(userName?.hasError('required') && userName?.touched){
+    <div class="text-danger bg-transparent">Username is required</div>
+    }
+
     <label class="">First Name</label>
     <input
       class="text-center"
       type="text"
-      formControlName="name"
+      formControlName="firstName"
       placeholder="Please enter your First Name"
     />
-    @if(name?.hasError('required') && name?.touched){
-    <div class="text-danger bg-transparent">Name is required</div>
+    @if(firstName?.hasError('required') && firstName?.touched){
+    <div class="text-danger bg-transparent">First Name is required</div>
     }
     
 
@@ -34,10 +46,10 @@
     <input
       class="text-center"
       type="text"
-      formControlName="lastname"
+      formControlName="lastName"
       placeholder="Please enter your Last Name"
     />
-    @if(lastname?.hasError('required') && lastname?.touched){
+    @if(lastName?.hasError('required') && lastName?.touched){
     <div class="text-danger bg-transparent">Lastname is required</div>
     }
     
@@ -58,16 +70,15 @@
     <input
       class="text-center"
       type="text"
-      formControlName="phone"
+      formControlName="phoneNumber"
       placeholder="Please enter your phone number"
     />
-    @if(phone?.hasError('required') && phone?.touched){
+    @if(phoneNumber?.hasError('required') && phoneNumber?.touched){
     <div class="text-danger bg-transparent">Phone number is required</div>
     }
-    @if(phone?.hasError('pattern') && phone?.touched){
+    @if(phoneNumber?.hasError('pattern') && phoneNumber?.touched){
     <div class="text-danger bg-transparent">Phone number must contain 10 digits </div>
     }
-    
 
     <label>E-mail</label>
     <input
@@ -95,7 +106,7 @@
     } @if(password?.hasError('minlength') && password?.touched){
     <div class="text-danger bg-transparent">Password must have at least 4 letters</div>
     } @if(password?.hasError('pattern') &&password?.touched){
-    <div class="text-danger bg-transparent">Password must have only letters</div>
+    <div class="text-danger bg-transparent">Password must at least one lowercase letter, one uppercase letter, one digit and one special character</div>
     }
     
 
@@ -110,13 +121,9 @@
     confirmPassword?.touched){
     <div class="text-danger bg-transparent">Passwords do not match</div>
     }
-    <select formControlName="role">
-        <option value="PropertyOwner">Property Owner</option>
-        <option value="Admin">Admin</option>
-    </select>
     <div class="footer d-flex justify-content-between py-3">
       <button class="text-center submit-button" id="login" (click)="goLogin()">Already Registered? Login</button>
-      <button class="text-center submit-button" id="signup"[disabled]="!registrationForm.valid" (click)="postAddUser()" >
+      <button class="text-center submit-button" id="signup"[disabled]="!registrationForm.valid" >
         Signup
       </button>
     </div>

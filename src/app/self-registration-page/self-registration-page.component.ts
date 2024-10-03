@@ -25,48 +25,69 @@ export class SelfRegistrationPageComponent implements OnInit {
   service2 = inject(UserService);
   users: any;
   answer: any;
+  userForm!: FormGroup;
+  propertyForm!: FormGroup;
+  newUser = {
+    vat: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    phoneNumber: '',
+    email: '',
+    userName: '',
+    password: '',
+    confirmPassword: '',
+  };
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group(
       {
-        VAT: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-        name: ['', Validators.required],
-        lastname: ['', Validators.required],
+        vat: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+        userName: ['', Validators.required],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
         address: ['', Validators.required],
-        phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+        phoneNumber: [
+          '',
+          [Validators.required, Validators.pattern(/^[0-9]{10}$/)],
+        ],
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
           [
             Validators.required,
             Validators.minLength(4),
-            Validators.pattern('^[a-zA-Z]+$'),
+            Validators.pattern(
+              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$'
+            ),
           ],
         ],
         confirmPassword: ['', Validators.required],
-        role: ['PropertyOwner', Validators.required],
       },
       {
         validators: CustomValidatorsService.passwordMatchValidator,
       }
-    ); 
+    );
   }
 
-  get VAT() {
-    return this.registrationForm.get('VAT');
+  get vat() {
+    return this.registrationForm.get('vat');
   }
-  get name() {
-    return this.registrationForm.get('name');
+  get firstName() {
+    return this.registrationForm.get('firstName');
   }
-  get lastname() {
-    return this.registrationForm.get('lastname');
+  get lastName() {
+    return this.registrationForm.get('lastName');
+  }
+  get userName() {
+    return this.registrationForm.get('userName');
   }
   get address() {
     return this.registrationForm.get('address');
   }
 
-  get phone() {
-    return this.registrationForm.get('phone');
+  get phoneNumber() {
+    return this.registrationForm.get('phoneNumber');
   }
 
   get email() {
@@ -86,37 +107,24 @@ export class SelfRegistrationPageComponent implements OnInit {
     } else {
       console.log('Form is invalid');
     }
-    // console.log(this.registrationForm.value);
-    // console.log(this.registrationForm.status);
+  }
+  postAddUser(): any {
+    let userData = {
+      ...this.registrationForm.value,
+      isActive: true,
+      userType: 'PROPERTY_OWNER',
+    };
+    delete userData.confirmPassword;
 
-    // console.log(this.email);
-    // add some logic for your data here
-    //something like that
-    //if (this.loginForm.valid)
-    // this.service.post(this.loginForm.value)
+    this.service.postAddUser(userData).subscribe({
+      next: (response) => {
+        this.goLogin();
+      },
+      error: (err) => console.error(`Error adding user: ${err}`),
+    });
   }
   router = inject(Router);
   goLogin() {
     this.router.navigate(['login']);
-  }
-
-  postAddUser() {
-    const registeredUser = {
-      vat: '',
-      firstName: '',
-      lastName: '',
-      address: '',
-      phoneNumber: '',
-      email: '',
-      userName: '',
-      password: '',
-      userType: '',
-    };
-    //this.service2.setRegisteredUser(registeredUser);
-
-    this.service.postAddUser(registeredUser).subscribe({
-      next: (response) => (this.answer = response),
-      error: (err) => console.error(registeredUser),
-    });
   }
 }

@@ -19,6 +19,10 @@ body {
     box-shadow:  0 0 2px 2px #d9d9d9;
 }
 
+div.text-danger {
+    width:350px;
+}
+
 label {
     color: #004a7c;
     background-color: #e8f1f5;
