@@ -10,8 +10,6 @@ import {
 } from '@angular/forms';
 import { CustomValidatorsService } from '../services/custom-validators.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
-import { FilterRepairsPipe } from '../filter-repairs.pipe';
 
 @Component({
   selector: 'app-user',
@@ -22,7 +20,6 @@ import { FilterRepairsPipe } from '../filter-repairs.pipe';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FilterRepairsPipe,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
@@ -45,7 +42,6 @@ export class UserComponent implements OnInit {
   response: any;
   firstName: string | null = null;
   lastName: string | null = null;
-  private baseUrl = 'http://localhost:8080/webTechnikon/resources/user';
   userId: string | null = null;
   route = inject(ActivatedRoute);
   repairs: any[] = [];
@@ -62,11 +58,11 @@ export class UserComponent implements OnInit {
   };
 
   repairTypes = [
-    { id: 0, name: 'PAINTING' },
-    { id: 1, name: 'INSULATION' },
-    { id: 2, name: 'FRAMES' },
-    { id: 3, name: 'PLUMBING' },
-    { id: 4, name: 'ELECTRICALWORK' },
+    { label: 'Painting', value: 'PAINTING' },
+    { label: 'Insulation', value: 'INSULATION' },
+    { label: 'Frames', value: 'FRAMES' },
+    { label: 'Plumbing', value: 'PLUMBING' },
+    { label: 'Electrical work', value: 'ELECTRICALWORK' },
   ];
 
   ngOnInit(): void {
@@ -121,45 +117,26 @@ export class UserComponent implements OnInit {
       property: this.fb.group({
         id: [null, Validators.required],
       }),
-      typeOfRepair: [0, Validators.required],
+      typeOfRepair: [this.repairTypes[0].value, Validators.required],
       shortDescription: ['', Validators.required],
-      submissionDate: [
-        new Date().toISOString().split('T')[0],
-        Validators.required,
-      ],
+
       description: ['', Validators.required],
-      status: ['PENDING'],
-      isActive: [true],
     });
 
     // Get all user's properties
     this.service.getAllMyProperties(this.userId).subscribe({
       next: (response) => {
         this.properties = response;
-        console.log('My properties:', response);
         if (this.properties.length > 0) {
-          this.selectProperty(this.properties[0].propertyId); // Επιλογή της πρώτης ιδιοκτησίας για αρχική φόρτωση επισκευών
+          this.repairForm.patchValue({
+            property: {
+              id: this.properties[0].id,
+            },
+          });
         }
       },
       error: (err) => console.error(`Error fetching users: ${err}`),
       //complete: () => console.log('Data Fetch completed...')
-    });
-
-    // Όταν επιλέγεται μια ιδιοκτησία, φορτώνει τις επισκευές
-    this.service.onPropertySelect(this.propertyId).subscribe({
-      next: (response: any) => {
-        this.repairs = response;
-        console.log(`Repairs for property ${this.propertyId}:`, this.repairs);
-      },
-      error: (err: any) => console.error(`Error fetching repairs: ${err}`),
-    });
-
-    this.service.getMyRepairs(this.propertyId).subscribe({
-      next: (response) => {
-        this.repairs = response;
-        console.log(`Repairs for property ${this.propertyId}:`, this.repairs);
-      },
-      error: (err) => console.error(`Error fetching repairs: ${err}`),
     });
   }
 
@@ -189,10 +166,11 @@ export class UserComponent implements OnInit {
     if (this.repairForm.valid) {
       const repairData = {
         ...this.repairForm.value,
-        propertyId: this.selectedPropertyId,
+        status: 'PENDING',
+        isActive: true,
+        submissionDate: new Date().toISOString().split('T')[0],
       };
 
-      repairData.status = 'PENDING';
       console.log('Repair Data:', repairData);
       this.service.postAddRepair(repairData).subscribe({
         next: (response) => {
@@ -245,8 +223,15 @@ export class UserComponent implements OnInit {
       error: (err) => console.error(`Error updating user: ${err}`),
     });
   }
-  selectProperty(propertyId: number) {
-    this.selectedPropertyId = +propertyId; // Καταχώριση της επιλεγμένης ιδιοκτησίας
-    this.service.getMyRepairs(propertyId); // Φόρτωμα επισκευών για την επιλεγμένη ιδιοκτησία
+
+  selectProperty(event: Event) {
+    const selectedPropertyId = (event.target as HTMLSelectElement).value;
+    this.service.getMyRepairs(+selectedPropertyId).subscribe({
+      next: (response) => {
+        this.repairs = response;
+        console.log(`Repairs for property ${this.propertyId}:`, this.repairs);
+      },
+      error: (err) => console.error(`Error fetching repairs: ${err}`),
+    });
   }
 }

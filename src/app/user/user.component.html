@@ -138,7 +138,8 @@
       <button type="submit" class="btn btn-primary">Add Property</button>
     </div>
   </form>
-
+</div>
+<div class="container my-5">
   <h4 class="my-3">Update User Information</h4>
   <form [formGroup]="userForm" (ngSubmit)="putUpdateUser()" class="row g-3">
     <div class="col-md-6">
@@ -195,17 +196,18 @@
       </button>
     </div>
   </form>
-  <!-- <button class="btn btn-danger" (click)="confirmDeletion()">
+</div>
+<!-- <button class="btn btn-danger" (click)="confirmDeletion()">
     Delete Account
   </button> -->
 
-  <!-- Confirmation Modal -->
-  <!-- <div *ngIf="showConfirmModal" class="modal">
+<!-- Confirmation Modal -->
+<!-- <div *ngIf="showConfirmModal" class="modal">
     <p>Are you sure you want to delete your account?</p>
     <button class="btn btn-danger" (click)="softDeleteUser()">Yes</button>
     <button class="btn btn-secondary" (click)="cancelDeletion()">No</button>
   </div> -->
-  <!-- <div class="container my-5">
+<!-- <div class="container my-5">
     <h3>Repairs for Property with propertyId: {{propertyId}}</h3>
   
     <div class="row">
@@ -229,178 +231,131 @@
     </div>
   </div> -->
 
-  <div class="container my-5">
-    <h3>Select Property to View Repairs</h3>
+<div class="container my-5">
+  <h3>Select Property to View Repairs</h3>
 
-    <!-- Dropdown για την επιλογή ιδιοκτησίας  -->
-    <div class="form-group">
-      <label for="propertySelect">Select Property:</label>
-      <select
-        id="propertySelect"
-        class="form-control"
-        [(ngModel)]="selectedPropertyId"
-        (click)="selectProperty(propertyId)"
+  <!-- Dropdown για την επιλογή ιδιοκτησίας  -->
+  <div class="form-group">
+    <label for="propertySelect">Select Property:</label>
+    <select
+      id="propertySelect"
+      class="form-control"
+      [(ngModel)]="selectedPropertyId"
+      (change)="selectProperty($event)"
+    >
+      <option *ngFor="let property of properties" [value]="property.id">
+        {{ property.address }} ({{ property.propertyType }})
+      </option>
+    </select>
+  </div>
+
+  <!-- Εμφάνιση επισκευών για την επιλεγμένη ιδιοκτησία -->
+  <div *ngIf="selectedPropertyId && repairs.length > 0" class="mt-4">
+    <h4>Repairs for Selected Property</h4>
+
+    <div class="row">
+      <div
+        *ngFor="let repair of repairs"
+        class="col-xs-12 col-sm-6 col-lg-4 mb-4"
       >
-        <option
-          *ngFor="let property of properties"
-          [value]="property.propertyId"
-        >
-          {{ property.address }} ({{ property.propertyType }})
-        </option>
-      </select>
-    </div>
-
-    <!-- Εμφάνιση επισκευών για την επιλεγμένη ιδιοκτησία -->
-    <div *ngIf="repairs.length > 0" class="mt-4">
-      <h4>Repairs for Selected Property</h4>
-
-      <div class="row">
-        <div
-          *ngFor="let property of properties"
-          class="col-xs-12 col-sm-6 col-lg-4 mb-4"
-        >
-          <div *ngFor="let repair of repairs | filterRepairs : property.id">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{ repair.typeOfRepair }}</h5>
-                <p class="card-text">
-                  <strong>Short Description:</strong>
-                  {{ repair.shortDescription }}
-                </p>
-                <p class="card-text">
-                  <strong>Description:</strong> {{ repair.description }}
-                </p>
-                <p class="card-text">
-                  <strong>Status:</strong> {{ repair.status }}
-                </p>
-                <p class="card-text">
-                  <strong>Proposed Cost:</strong>
-                  {{ repair.proposedCost | currency }}
-                </p>
-                <p class="card-text">
-                  <strong>Owner Acceptance:</strong>
-                  {{ repair.ownerAcceptance ? "Accepted" : "Not Accepted" }}
-                </p>
-                <p class="card-text">
-                  <strong>Submission Date:</strong>
-                  {{ repair.submissionDate | date : "longDate" }}
-                </p>
-              </div>
-            </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ repair.typeOfRepair }}</h5>
+            <p class="card-text">
+              <strong>Short Description:</strong>
+              {{ repair.shortDescription }}
+            </p>
+            <p class="card-text">
+              <strong>Description:</strong> {{ repair.description }}
+            </p>
+            <p class="card-text">
+              <strong>Status:</strong> {{ repair.status }}
+            </p>
+            <p class="card-text">
+              <strong>Owner Acceptance:</strong>
+              {{ repair.ownerAcceptance ? "Accepted" : "Not Accepted" }}
+            </p>
+            <p class="card-text">
+              <strong>Submission Date:</strong>
+              {{ repair.submissionDate | date : "longDate" }}
+            </p>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Μήνυμα αν δεν υπάρχουν επισκευές -->
-    <div *ngIf="repairs.length === 0 && selectedPropertyId" class="mt-4">
-      <p>No repairs found for this property.</p>
-    </div>
-
-    <div class="container my-5">
-      <h3>Select Property to Add Repair</h3>
-
-      <!-- Dropdown for selecting a property -->
-      <div class="form-group">
-        <label for="propertySelect">Select Property:</label>
-        <select
-          id="propertySelect"
-          class="form-control"
-          [(ngModel)]="selectedPropertyId"
-        >
-          <option *ngFor="let property of properties" [value]="property.id">
-            {{ property.address }} ({{ property.propertyType }})
-          </option>
-        </select>
-      </div>
-      <form
-        [formGroup]="repairForm"
-        (ngSubmit)="postAddRepair()"
-        class="row g-3 mt-4"
-      >
-        <div class="col-md-6">
-          <label for="typeOfRepair" class="form-label">Type of Repair</label>
-          <select
-            id="typeOfRepair"
-            formControlName="typeOfRepair"
-            class="form-select"
-            required
-          >
-            <option
-              *ngFor="let repairType of repairTypes"
-              [value]="repairType.id"
-            >
-              {{ repairType.name }}
-            </option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label for="shortDescription" class="form-label"
-            >Short Description</label
-          >
-          <input
-            id="shortDescription"
-            formControlName="shortDescription"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="col-md-6">
-          <label for="submissionDate" class="form-label">Submission Date</label>
-          <input
-            id="submissionDate"
-            type="date"
-            formControlName="submissionDate"
-            class="form-control"
-            required
-          />
-        </div>
-
-        <div class="col-md-6">
-          <label for="description" class="form-label">Description</label>
-          <textarea
-            id="description"
-            formControlName="description"
-            class="form-control"
-            rows="3"
-            required
-          ></textarea>
-        </div>
-        <div class="col-md-6">
-          <label for="status" class="form-label">Status</label>
-          <select
-            id="status"
-            formControlName="status"
-            class="form-control"
-            rows="3"
-            required
-            [value]="repairForm.status"
-          >
-            {{
-              repairForm.status
-            }}
-          </select>
-        </div>
-
-        <div class="col-12">
-          <button type="submit" class="btn btn-primary">Add Repair</button>
-        </div>
-        <!-- <div>
-        <label for="repairCost">Cost</label>
-        <input id="repairCost" formControlName="repairCost" type="number" />
-      </div>
-      <div>
-        <label for="startDate">Start Date</label>
-        <input id="startDate" formControlName="startDate" type="date" />
-      </div>
-      <div>
-        <label for="endDate">End Date</label>
-        <input id="endDate" formControlName="endDate" type="date" />
-      </div> -->
-      </form>
-      <div *ngIf="repairs.length === 0 && selectedPropertyId" class="mt-4">
-        <p>No repairs found for this property.</p>
-      </div>
+  <!-- Μήνυμα αν δεν υπάρχουν επισκευές -->
+  <div *ngIf="selectedPropertyId && repairs.length === 0" class="mt-4">
+    <div class="alert alert-info" role="alert">
+      No repairs found for this property.
     </div>
   </div>
+</div>
+
+<div class="container my-5">
+  <h3>Select Property to Add Repair</h3>
+
+  <!-- Dropdown for selecting a property -->
+
+  <form
+    [formGroup]="repairForm"
+    (ngSubmit)="postAddRepair()"
+    class="row g-3 mt-4"
+  >
+    <div formGroupName="property" class="form-group">
+      <label for="propertySelect">Select Property:</label>
+      <select id="propertySelect" class="form-control" formControlName="id">
+        <option *ngFor="let property of properties" [value]="property.id">
+          {{ property.address }} ({{ property.propertyType }})
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="typeOfRepair" class="form-label">Type of Repair</label>
+      <select
+        id="typeOfRepair"
+        formControlName="typeOfRepair"
+        class="form-select"
+        required
+      >
+        <option
+          *ngFor="let repairType of repairTypes"
+          [value]="repairType.value"
+        >
+          {{ repairType.label }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="shortDescription" class="form-label">Short Description</label>
+      <input
+        id="shortDescription"
+        formControlName="shortDescription"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="form-control"
+        rows="3"
+        required
+      ></textarea>
+    </div>
+
+    <div class="col-12">
+      <button
+        type="submit"
+        [disabled]="!repairForm.valid"
+        class="btn btn-primary"
+      >
+        Add Repair
+      </button>
+    </div>
+  </form>
 </div>
