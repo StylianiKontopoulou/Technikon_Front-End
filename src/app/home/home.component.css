@@ -3,3 +3,7 @@
     height: 250px; 
     object-fit: cover;
 }
+
+.service-card {
+    height:360px;
+}
