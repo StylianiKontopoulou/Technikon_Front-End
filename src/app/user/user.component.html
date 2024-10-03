@@ -1,8 +1,406 @@
-<!-- <h3>User</h3>>
+<div class="text-center">
+  <h4>My Information</h4>
 
-{{id}} <br>
+  <div class="container my-5">
+    <div class="row">
+      <div
+        *ngIf="currentUser !== null"
+        class="col-xs-12 col-sm-6 col-lg-3 mb-sm-2"
+      >
+        <div *ngIf="currentUser !== null" class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">User Information</h5>
+            <p class="card-text">
+              <strong>First Name:</strong> {{ currentUser.firstName }}
+            </p>
+            <p class="card-text">
+              <strong>Last Name:</strong> {{ currentUser.lastName }}
+            </p>
+            <p class="card-text">
+              <strong>Email:</strong> {{ currentUser.email }}
+            </p>
+            <p class="card-text">
+              <strong>Address:</strong> {{ currentUser.address }}
+            </p>
+            <p class="card-text"><strong>VAT:</strong> {{ currentUser.vat }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-{{search}} <br>
-<hr>
-<button (click)="goHome()">Go Home</button>
-<button (click)="goAdmin()">Go Admin</button> -->
+  <h4>My Properties</h4>
+  <div class="container my-5">
+    <div class="row">
+      <div
+        *ngFor="let property of properties"
+        class="col-xs-12 col-md-6 col-lg-4 mb-sm-2"
+      >
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Property Information</h5>
+            <p class="card-text">
+              <strong>Owner:</strong> {{ property.user.firstName }}
+              {{ property.user.lastName }}
+            </p>
+            <p class="card-text">
+              <strong>Address:</strong> {{ property.address }}
+            </p>
+            <p class="card-text">
+              <strong>Property ID:</strong> {{ property.propertyId }}
+            </p>
+            <p class="card-text">
+              <strong>Year of Construction:</strong
+              >{{ property.yearOfConstruction }}
+            </p>
+            <p><strong>Property Type:</strong> {{ property.propertyType }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h4 class="my-3">Add New Property</h4>
+  <form
+    [formGroup]="propertyForm"
+    (ngSubmit)="postAddProperty()"
+    class="row g-3"
+  >
+    <div class="col-md-6">
+      <label for="property-address" class="form-label">Address</label>
+      <input
+        id="property-address"
+        formControlName="address"
+        class="form-control"
+        [(ngModel)]="newProperty.address"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="property-id" class="form-label">Property ID</label>
+      <input
+        id="property-id"
+        type="text"
+        formControlName="propertyId"
+        class="form-control"
+        [(ngModel)]="newProperty.propertyId"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="user-id" class="form-label">User (Owner)</label>
+      <select
+        id="user-id"
+        formControlName="userId"
+        class="form-control"
+        [(ngModel)]="newProperty.user.id"
+      >
+        <option *ngIf="currentUser !== null" [value]="currentUser.id">
+          {{ currentUser.firstName }} {{ currentUser.lastName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label for="yearOfConstruction" class="form-label"
+        >Year of Construction</label
+      >
+      <input
+        id="yearOfConstruction"
+        type="number"
+        formControlName="yearOfConstruction"
+        class="form-control"
+        [(ngModel)]="newProperty.yearOfConstruction"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="propertyType" class="form-label">Property Type</label>
+      <select
+        id="propertyType"
+        formControlName="propertyType"
+        class="form-select"
+        [(ngModel)]="newProperty.propertyType"
+        required
+      >
+        <option value="DETACHED_HOUSE">Detached house</option>
+        <option value="MAISONETTE">Maisonette</option>
+        <option value="APARTMENT_BUILDING">Apartment building</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Add Property</button>
+    </div>
+  </form>
+
+  <h4 class="my-3">Update User Information</h4>
+  <form [formGroup]="userForm" (ngSubmit)="putUpdateUser()" class="row g-3">
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="address" class="form-label">Address</label>
+      <input
+        id="address"
+        type="text"
+        formControlName="address"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="password" class="form-label">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="confirmPassword" class="form-label">Confirm Password</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="confirmPassword"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="col-12">
+      <button
+        type="submit"
+        [disabled]="!userForm.valid"
+        class="btn btn-primary"
+      >
+        Update User
+      </button>
+    </div>
+  </form>
+  <!-- <button class="btn btn-danger" (click)="confirmDeletion()">
+    Delete Account
+  </button> -->
+
+  <!-- Confirmation Modal -->
+  <!-- <div *ngIf="showConfirmModal" class="modal">
+    <p>Are you sure you want to delete your account?</p>
+    <button class="btn btn-danger" (click)="softDeleteUser()">Yes</button>
+    <button class="btn btn-secondary" (click)="cancelDeletion()">No</button>
+  </div> -->
+  <!-- <div class="container my-5">
+    <h3>Repairs for Property with propertyId: {{propertyId}}</h3>
+  
+    <div class="row">
+      <div *ngIf="repairs.length === 0" class="col-12">
+        <p>No repairs found for this property.</p>
+      </div>
+  
+      <div *ngFor="let repair of repairs" class="col-xs-12 col-sm-6 col-lg-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ repair.typeOfRepair }}</h5>
+            <p class="card-text"><strong>Short Description:</strong> {{ repair.shortDescription }}</p>
+            <p class="card-text"><strong>Description:</strong> {{ repair.description }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ repair.status }}</p>
+            <p class="card-text"><strong>Proposed Cost:</strong> {{ repair.proposedCost | currency }}</p>
+            <p class="card-text"><strong>Owner Acceptance:</strong> {{ repair.ownerAcceptance ? 'Accepted' : 'Not Accepted' }}</p>
+            <p class="card-text"><strong>Submission Date:</strong> {{ repair.submissionDate | date:'longDate' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="container my-5">
+    <h3>Select Property to View Repairs</h3>
+
+    <!-- Dropdown για την επιλογή ιδιοκτησίας  -->
+    <div class="form-group">
+      <label for="propertySelect">Select Property:</label>
+      <select
+        id="propertySelect"
+        class="form-control"
+        [(ngModel)]="selectedPropertyId"
+        (click)="selectProperty(propertyId)"
+      >
+        <option
+          *ngFor="let property of properties"
+          [value]="property.propertyId"
+        >
+          {{ property.address }} ({{ property.propertyType }})
+        </option>
+      </select>
+    </div>
+
+    <!-- Εμφάνιση επισκευών για την επιλεγμένη ιδιοκτησία -->
+    <div *ngIf="repairs.length > 0" class="mt-4">
+      <h4>Repairs for Selected Property</h4>
+
+      <div class="row">
+        <div
+          *ngFor="let property of properties"
+          class="col-xs-12 col-sm-6 col-lg-4 mb-4"
+        >
+          <div *ngFor="let repair of repairs | filterRepairs : property.id">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ repair.typeOfRepair }}</h5>
+                <p class="card-text">
+                  <strong>Short Description:</strong>
+                  {{ repair.shortDescription }}
+                </p>
+                <p class="card-text">
+                  <strong>Description:</strong> {{ repair.description }}
+                </p>
+                <p class="card-text">
+                  <strong>Status:</strong> {{ repair.status }}
+                </p>
+                <p class="card-text">
+                  <strong>Proposed Cost:</strong>
+                  {{ repair.proposedCost | currency }}
+                </p>
+                <p class="card-text">
+                  <strong>Owner Acceptance:</strong>
+                  {{ repair.ownerAcceptance ? "Accepted" : "Not Accepted" }}
+                </p>
+                <p class="card-text">
+                  <strong>Submission Date:</strong>
+                  {{ repair.submissionDate | date : "longDate" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Μήνυμα αν δεν υπάρχουν επισκευές -->
+    <div *ngIf="repairs.length === 0 && selectedPropertyId" class="mt-4">
+      <p>No repairs found for this property.</p>
+    </div>
+
+    <div class="container my-5">
+      <h3>Select Property to Add Repair</h3>
+
+      <!-- Dropdown for selecting a property -->
+      <div class="form-group">
+        <label for="propertySelect">Select Property:</label>
+        <select
+          id="propertySelect"
+          class="form-control"
+          [(ngModel)]="selectedPropertyId"
+        >
+          <option *ngFor="let property of properties" [value]="property.id">
+            {{ property.address }} ({{ property.propertyType }})
+          </option>
+        </select>
+      </div>
+      <form
+        [formGroup]="repairForm"
+        (ngSubmit)="postAddRepair()"
+        class="row g-3 mt-4"
+      >
+        <div class="col-md-6">
+          <label for="typeOfRepair" class="form-label">Type of Repair</label>
+          <select
+            id="typeOfRepair"
+            formControlName="typeOfRepair"
+            class="form-select"
+            required
+          >
+            <option
+              *ngFor="let repairType of repairTypes"
+              [value]="repairType.id"
+            >
+              {{ repairType.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="shortDescription" class="form-label"
+            >Short Description</label
+          >
+          <input
+            id="shortDescription"
+            formControlName="shortDescription"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="submissionDate" class="form-label">Submission Date</label>
+          <input
+            id="submissionDate"
+            type="date"
+            formControlName="submissionDate"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <label for="status" class="form-label">Status</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="form-control"
+            rows="3"
+            required
+            [value]="repairForm.status"
+          >
+            {{
+              repairForm.status
+            }}
+          </select>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Add Repair</button>
+        </div>
+        <!-- <div>
+        <label for="repairCost">Cost</label>
+        <input id="repairCost" formControlName="repairCost" type="number" />
+      </div>
+      <div>
+        <label for="startDate">Start Date</label>
+        <input id="startDate" formControlName="startDate" type="date" />
+      </div>
+      <div>
+        <label for="endDate">End Date</label>
+        <input id="endDate" formControlName="endDate" type="date" />
+      </div> -->
+      </form>
+      <div *ngIf="repairs.length === 0 && selectedPropertyId" class="mt-4">
+        <p>No repairs found for this property.</p>
+      </div>
+    </div>
+  </div>
+</div>
