@@ -76,21 +76,23 @@
             [disabled]="!userForm.valid"
             class="btn btn-primary me-3"
           >
-            Update User
+            Update user
           </button>
           <button
-          type="button"
-          class="btn btn-danger"
-          data-bs-toggle="modal"
-          data-bs-target="#deleteUserModal"
-        >
-          Delete my user
-        </button>
+            type="button"
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteUserModal"
+          >
+            Delete my user
+          </button>
         </div>
       </form>
     </div>
   </div>
-  <div
+</div>
+
+<div
   class="modal fade"
   id="deleteUserModal"
   tabindex="-1"
@@ -100,7 +102,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteUserModalLabel">Confirm User Deletion</h5>
+        <h5 class="modal-title" id="deleteUserModalLabel">
+          Confirm User Deletion
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -109,15 +113,10 @@
         ></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete your account? This action is
-        permanent, and you will be logged out immediately.
+        Are you sure you want to delete your account? This action is permanent, and you will be logged out immediately.
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-        >
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancel
         </button>
         <button
@@ -132,39 +131,41 @@
     </div>
   </div>
 </div>
-  <div class="container my-5">
-    <h4>My Properties</h4>
-    <div class="row">
-      <div
-        *ngFor="let property of properties"
-        class="col-xs-12 col-md-6 col-lg-4 mb-sm-2"
-      >
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Property Information</h5>
-            <p class="card-text">
-              <strong>Owner:</strong> {{ property.user.firstName }}
-              {{ property.user.lastName }}
-            </p>
-            <p class="card-text">
-              <strong>Address:</strong> {{ property.address }}
-            </p>
-            <p class="card-text">
-              <strong>Property ID:</strong> {{ property.propertyId }}
-            </p>
-            <p class="card-text">
-              <strong>Year of Construction:</strong
-              >{{ property.yearOfConstruction }}
-            </p>
-            <p><strong>Property Type:</strong> {{ property.propertyType }}</p>
-          </div>
+
+<div class="container my-5">
+  <h4>My Properties</h4>
+  <div *ngIf="properties.length === 0" class="mt-4">
+    <div class="alert alert-info" role="alert">
+      No properties added yet. Add a new property using the form below.
+    </div>
+  </div>
+
+  <div *ngIf="properties.length > 0" class="row">
+    <div
+      *ngFor="let property of properties"
+      class="col-xs-12 col-md-6 col-lg-4 mb-sm-2"
+    >
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Property Information</h5>
+          <p class="card-text">
+            <strong>Address:</strong> {{ property.address }}
+          </p>
+          <p class="card-text">
+            <strong>Property ID:</strong> {{ property.propertyId }}
+          </p>
+          <p class="card-text">
+            <strong>Year of Construction:</strong
+            >{{ property.yearOfConstruction }}
+          </p>
+          <p><strong>Property Type:</strong> {{ property.propertyType }}</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container">
+<div class="container my-5">
   <h4 class="my-3">Add New Property</h4>
   <form
     [formGroup]="propertyForm"
@@ -238,7 +239,7 @@
     </div>
 
     <div class="col-12">
-      <button type="submit" class="btn btn-primary">Add Property</button>
+      <button type="submit" [disabled]="!propertyForm.valid" class="btn btn-primary">Add Property</button>
     </div>
   </form>
 </div>
