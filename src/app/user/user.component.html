@@ -1,36 +1,139 @@
-<div class="text-center">
-  <h4>My Information</h4>
-
-  <div class="container my-5">
-    <div class="row">
-      <div
-        *ngIf="currentUser !== null"
-        class="col-xs-12 col-sm-6 col-lg-3 mb-sm-2"
-      >
-        <div *ngIf="currentUser !== null" class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">User Information</h5>
-            <p class="card-text">
-              <strong>First Name:</strong> {{ currentUser.firstName }}
-            </p>
-            <p class="card-text">
-              <strong>Last Name:</strong> {{ currentUser.lastName }}
-            </p>
-            <p class="card-text">
-              <strong>Email:</strong> {{ currentUser.email }}
-            </p>
-            <p class="card-text">
-              <strong>Address:</strong> {{ currentUser.address }}
-            </p>
-            <p class="card-text"><strong>VAT:</strong> {{ currentUser.vat }}</p>
-          </div>
+<div class="container my-5">
+  <div class="row">
+    <div *ngIf="currentUser !== null" class="col-xs-12 col-sm-6 col-lg-4">
+      <h4>My Information</h4>
+      <div *ngIf="currentUser !== null" class="card">
+        <div class="card-body">
+          <p class="card-text">
+            <strong>First Name:</strong> {{ currentUser.firstName }}
+          </p>
+          <p class="card-text">
+            <strong>Last Name:</strong> {{ currentUser.lastName }}
+          </p>
+          <p class="card-text">
+            <strong>Email:</strong> {{ currentUser.email }}
+          </p>
+          <p class="card-text">
+            <strong>Address:</strong> {{ currentUser.address }}
+          </p>
+          <p class="card-text"><strong>VAT:</strong> {{ currentUser.vat }}</p>
         </div>
       </div>
     </div>
-  </div>
+    <div class="vr col-1"></div>
+    <div *ngIf="currentUser !== null" class="col-xs-12 col-sm-5 col-lg-7">
+      <h4 class="mb-3">Update User Information</h4>
+      <form [formGroup]="userForm" (ngSubmit)="putUpdateUser()" class="row g-3">
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="form-control"
+            required
+          />
+        </div>
 
-  <h4>My Properties</h4>
+        <div class="col-md-6">
+          <label for="address" class="form-label">Address</label>
+          <input
+            id="address"
+            type="text"
+            formControlName="address"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label for="password" class="form-label">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label for="confirmPassword" class="form-label"
+            >Confirm Password</label
+          >
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="col-12">
+          <button
+            type="submit"
+            [disabled]="!userForm.valid"
+            class="btn btn-primary me-3"
+          >
+            Update User
+          </button>
+          <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteUserModal"
+        >
+          Delete my user
+        </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div
+  class="modal fade"
+  id="deleteUserModal"
+  tabindex="-1"
+  aria-labelledby="deleteUserModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteUserModalLabel">Confirm User Deletion</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your account? This action is
+        permanent, and you will be logged out immediately.
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="softDeleteUser()"
+          data-bs-dismiss="modal"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="container my-5">
+    <h4>My Properties</h4>
     <div class="row">
       <div
         *ngFor="let property of properties"
@@ -139,97 +242,6 @@
     </div>
   </form>
 </div>
-<div class="container my-5">
-  <h4 class="my-3">Update User Information</h4>
-  <form [formGroup]="userForm" (ngSubmit)="putUpdateUser()" class="row g-3">
-    <div class="col-md-6">
-      <label for="email" class="form-label">Email</label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="address" class="form-label">Address</label>
-      <input
-        id="address"
-        type="text"
-        formControlName="address"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="password" class="form-label">Password</label>
-      <input
-        id="password"
-        type="password"
-        formControlName="password"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="confirmPassword" class="form-label">Confirm Password</label>
-      <input
-        id="confirmPassword"
-        type="password"
-        formControlName="confirmPassword"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="col-12">
-      <button
-        type="submit"
-        [disabled]="!userForm.valid"
-        class="btn btn-primary"
-      >
-        Update User
-      </button>
-    </div>
-  </form>
-</div>
-<!-- <button class="btn btn-danger" (click)="confirmDeletion()">
-    Delete Account
-  </button> -->
-
-<!-- Confirmation Modal -->
-<!-- <div *ngIf="showConfirmModal" class="modal">
-    <p>Are you sure you want to delete your account?</p>
-    <button class="btn btn-danger" (click)="softDeleteUser()">Yes</button>
-    <button class="btn btn-secondary" (click)="cancelDeletion()">No</button>
-  </div> -->
-<!-- <div class="container my-5">
-    <h3>Repairs for Property with propertyId: {{propertyId}}</h3>
-  
-    <div class="row">
-      <div *ngIf="repairs.length === 0" class="col-12">
-        <p>No repairs found for this property.</p>
-      </div>
-  
-      <div *ngFor="let repair of repairs" class="col-xs-12 col-sm-6 col-lg-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{ repair.typeOfRepair }}</h5>
-            <p class="card-text"><strong>Short Description:</strong> {{ repair.shortDescription }}</p>
-            <p class="card-text"><strong>Description:</strong> {{ repair.description }}</p>
-            <p class="card-text"><strong>Status:</strong> {{ repair.status }}</p>
-            <p class="card-text"><strong>Proposed Cost:</strong> {{ repair.proposedCost | currency }}</p>
-            <p class="card-text"><strong>Owner Acceptance:</strong> {{ repair.ownerAcceptance ? 'Accepted' : 'Not Accepted' }}</p>
-            <p class="card-text"><strong>Submission Date:</strong> {{ repair.submissionDate | date:'longDate' }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
 <div class="container my-5">
   <h3>Select Property to View Repairs</h3>

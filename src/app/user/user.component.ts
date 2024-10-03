@@ -9,7 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { CustomValidatorsService } from '../services/custom-validators.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -25,11 +26,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './user.component.css',
 })
 export class UserComponent implements OnInit {
-  onPropertySelect(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
-
   service = inject(UserService);
+  authService = inject(AuthService);
   currentUser: any = {};
   users: any;
   properties: any;
@@ -39,6 +37,7 @@ export class UserComponent implements OnInit {
   repairForm!: FormGroup;
 
   fb = inject(FormBuilder);
+  router = inject(Router);
   response: any;
   firstName: string | null = null;
   lastName: string | null = null;
@@ -183,21 +182,12 @@ export class UserComponent implements OnInit {
     }
   }
 
-  showConfirmModal = false;
-
-  confirmDeletion(): void {
-    this.showConfirmModal = true;
-  }
-
-  cancelDeletion(): void {
-    this.showConfirmModal = false;
-  }
-
   softDeleteUser(): void {
-    this.service.softDeleteUser(this.users.id).subscribe({
+    this.service.softDeleteUser(this.userId).subscribe({
       next: () => {
-        alert('Your account has been deleted.');
-        this.showConfirmModal = false;
+        this.authService.logout();
+
+        this.router.navigate([`/home`]);
       },
       error: (err) => console.error(`Error deleting user: ${err}`),
     });

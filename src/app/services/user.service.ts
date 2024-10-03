@@ -103,7 +103,7 @@ export class UserService {
   softDeleteUser(userId: any): Observable<any> {
     const headers = this.createAuthorizationHeader();
     return this.http
-      .put(`${this.baseUrl}/users/${userId}/deactivate`, { headers })
+      .delete(`${this.baseUrl}/users/${userId}`, { headers })
       .pipe(
         retry(1),
         catchError((error) => {
